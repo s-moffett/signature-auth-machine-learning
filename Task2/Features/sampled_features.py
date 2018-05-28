@@ -227,8 +227,8 @@ for i in range(0, 40):
   features.append(mega_features)
   labels.append(np_label_genuine[i])
 
-print('User has ' + str(len(samples[0])) + ' features.')
+print('')
+print('User ' + user + ' has ' + str(len(samples[0])) + ' features.')
 
-np.savetxt('samples.csv', samples)
-np.savetxt('features.csv', features)
-np.savetxt('labels.csv', labels)
+np.savetxt('./Task2/Features/Data/user' + user + '_features.csv', features)
+np.savetxt('./Task2/Features/Data/user' + user + '_labels.csv', labels)
