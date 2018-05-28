@@ -191,17 +191,15 @@ for sample in u1_samples:
 np_label_genuine = np.array(list_genuine)
 
 ###########################################################################
-# Merge features into a mega-feature for each samle.
+# Merge features into a mega-feature for each sample.
 ###########################################################################
 
 input_features = [
-  # np_feature_time,
   np_feature_x,
   np_feature_y,
   np_feature_azimuth,
   np_feature_altitude,
   np_feature_pressure,
-  # np_label_genuine
 ]
 
 samples = []
@@ -216,19 +214,24 @@ for i in range(0, 40):
   for j in range(0, 5):
     mega_features = np.concatenate((mega_features, input_features[j][i]), axis=0)
 
-  mega_features = np.append(mega_features, np_feature_time[i])
+  # Add total time to megafeatures.
+  # mega_features = np.append(mega_features, np_feature_time[i])
   
-  # Uncomment for 'samples.csv'
-  # mega_features = np.append(mega_features, np_label_genuine[i])
-
-  # Add them all in to samples array.
-  samples.append(mega_features)
+  # # Add them all to samples array.
+  # samples.append(mega_features)
 
   features.append(mega_features)
   labels.append(np_label_genuine[i])
 
-print('')
-print('User ' + user + ' has ' + str(len(samples[0])) + ' features.')
+###########################################################################
+# Write to file.
+###########################################################################
 
-np.savetxt('./Task2/Features/Data/user' + user + '_features.csv', features)
-np.savetxt('./Task2/Features/Data/user' + user + '_labels.csv', labels)
+print('')
+print('Writing sampled features to file.')
+
+np.savetxt('./Task2/Features/Data/Sampled/features_user' + user + '.csv', features)
+np.savetxt('./Task2/Features/Data/Sampled/labels_user' + user + '.csv', labels)
+
+print('')
+print('User ' + user + ' has ' + str(len(features[0])) + ' features.')
