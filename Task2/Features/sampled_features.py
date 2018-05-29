@@ -12,226 +12,226 @@
 #     Mac = 1
 data_source = 0
 
-# User
-user = '1'
+for jkl in range(1, 41):
+  user = str(jkl)
 
-###########################################################################
-# Import libraries.
-###########################################################################
-import pandas as pd
-import numpy as np
-from matplotlib import pyplot as plt
-from sklearn.model_selection import train_test_split
+  ###########################################################################
+  # Import libraries.
+  ###########################################################################
+  import pandas as pd
+  import numpy as np
+  from matplotlib import pyplot as plt
+  from sklearn.model_selection import train_test_split
 
-pd.options.mode.chained_assignment = None
+  pd.options.mode.chained_assignment = None
 
-###########################################################################
-# Load data.
-#
-#   Columns:
-#     x, y, time, button, azimuth, altitude, pressure, genuine
-#
-###########################################################################
+  ###########################################################################
+  # Load data.
+  #
+  #   Columns:
+  #     x, y, time, button, azimuth, altitude, pressure, genuine
+  #
+  ###########################################################################
 
-print('')
-print('Loading clean data...')
+  print('')
+  print('Loading clean data...')
 
-data_source = 0
-data = pd.DataFrame()
+  data_source = 0
+  data = pd.DataFrame()
 
-# Linux
-if data_source == 0:
-  data = pd.read_csv('/home/seth/Documents/Classes/Biometrics/Project/Workspace/Task2/Cleaning/Data/clean_user' + user + '.csv', sep=',', skiprows=0)
+  # Linux
+  if data_source == 0:
+    data = pd.read_csv('/home/seth/Documents/Classes/Biometrics/Project/Workspace/Task2/Cleaning/Data/clean_user' + user + '.csv', sep=',', skiprows=0)
 
-# Mac
-if data_source == 1:
-  data = pd.read_csv('/Users/sethmoffett/Documents/Docs/Classes/Biometrics/Project/Dataset2/user1.csv', sep=',', skiprows=0)
+  # Mac
+  if data_source == 1:
+    data = pd.read_csv('/Users/sethmoffett/Documents/Docs/Classes/Biometrics/Project/Dataset2/user1.csv', sep=',', skiprows=0)
 
-###########################################################################
-# Separate the signature samples.
-###########################################################################
+  ###########################################################################
+  # Separate the signature samples.
+  ###########################################################################
 
-u1_samples = []
-for sample_index in range(1, 41):
-  u1_samples.append(data.loc[data['signature'] == sample_index])
+  u1_samples = []
+  for sample_index in range(1, 41):
+    u1_samples.append(data.loc[data['signature'] == sample_index])
 
-###########################################################################
-# Create total time feature.
-###########################################################################
+  ###########################################################################
+  # Create total time feature.
+  ###########################################################################
 
-print('')
-print('Creating total time feature...')
+  print('')
+  print('Creating total time feature...')
 
-list_total_time = []
+  list_total_time = []
 
-for sample in u1_samples:
-  list_total_time.append(sample['time'].max() - sample['time'].min())
+  for sample in u1_samples:
+    list_total_time.append(sample['time'].max() - sample['time'].min())
 
-np_feature_time = np.array(list_total_time)
+  np_feature_time = np.array(list_total_time)
 
-###########################################################################
-# Create x feature.
-###########################################################################
+  ###########################################################################
+  # Create x feature.
+  ###########################################################################
 
-print('Creating x feature...')
-list_x = []
+  print('Creating x feature...')
+  list_x = []
 
-for sample in u1_samples:
-  list_sample_x = []
-  x_start = 0
-  x_end = 5
+  for sample in u1_samples:
+    list_sample_x = []
+    x_start = 0
+    x_end = 5
 
-  while x_end < len(sample['x']):
-    list_sample_x.append(sample['x'][x_start:x_end].mean())
-    x_start += 5
-    x_end += 5
+    while x_end < len(sample['x']):
+      list_sample_x.append(sample['x'][x_start:x_end].mean())
+      x_start += 5
+      x_end += 5
 
-  list_x.append(list_sample_x)
+    list_x.append(list_sample_x)
 
-np_feature_x = np.array(list_x)
-np_feature_x = np_feature_x / np.amax(np_feature_x)
+  np_feature_x = np.array(list_x)
+  np_feature_x = np_feature_x / np.amax(np_feature_x)
 
-###########################################################################
-# Create y feature.
-###########################################################################
+  ###########################################################################
+  # Create y feature.
+  ###########################################################################
 
-print('Creating y feature...')
-list_y = []
+  print('Creating y feature...')
+  list_y = []
 
-for sample in u1_samples:
-  list_sample_y = []
-  y_start = 0
-  y_end = 5
+  for sample in u1_samples:
+    list_sample_y = []
+    y_start = 0
+    y_end = 5
 
-  while y_end < len(sample['y']):
-    list_sample_y.append(sample['y'][y_start:y_end].mean())
-    y_start += 5
-    y_end += 5
+    while y_end < len(sample['y']):
+      list_sample_y.append(sample['y'][y_start:y_end].mean())
+      y_start += 5
+      y_end += 5
 
-  list_y.append(list_sample_y)
+    list_y.append(list_sample_y)
 
-np_feature_y = np.array(list_y)
-np_feature_y = np_feature_y / np.amax(np_feature_y)
+  np_feature_y = np.array(list_y)
+  np_feature_y = np_feature_y / np.amax(np_feature_y)
 
-###########################################################################
-# Create azimuth feature.
-###########################################################################
+  ###########################################################################
+  # Create azimuth feature.
+  ###########################################################################
 
-print('Creating azimuth feature...')
-list_azimuth = []
+  print('Creating azimuth feature...')
+  list_azimuth = []
 
-for sample in u1_samples:
-  list_sample_azimuth = []
-  azimuth_start = 0
-  azimuth_end = 5
+  for sample in u1_samples:
+    list_sample_azimuth = []
+    azimuth_start = 0
+    azimuth_end = 5
 
-  while azimuth_end < len(sample['azimuth']):
-    list_sample_azimuth.append(sample['azimuth'][azimuth_start:azimuth_end].mean())
-    azimuth_start += 5
-    azimuth_end += 5
+    while azimuth_end < len(sample['azimuth']):
+      list_sample_azimuth.append(sample['azimuth'][azimuth_start:azimuth_end].mean())
+      azimuth_start += 5
+      azimuth_end += 5
 
-  list_azimuth.append(list_sample_azimuth)
+    list_azimuth.append(list_sample_azimuth)
 
-np_feature_azimuth = np.array(list_azimuth)
-np_feature_azimuth = np_feature_azimuth / np.amax(np_feature_azimuth)
+  np_feature_azimuth = np.array(list_azimuth)
+  np_feature_azimuth = np_feature_azimuth / np.amax(np_feature_azimuth)
 
-###########################################################################
-# Create altitude feature.
-###########################################################################
+  ###########################################################################
+  # Create altitude feature.
+  ###########################################################################
 
-print('Creating altitude feature...')
-list_altitude = []
+  print('Creating altitude feature...')
+  list_altitude = []
 
-for sample in u1_samples:
-  list_sample_altitude = []
-  altitude_start = 0
-  altitude_end = 5
+  for sample in u1_samples:
+    list_sample_altitude = []
+    altitude_start = 0
+    altitude_end = 5
 
-  while altitude_end < len(sample['altitude']):
-    list_sample_altitude.append(sample['altitude'][altitude_start:altitude_end].mean())
-    altitude_start += 5
-    altitude_end += 5
+    while altitude_end < len(sample['altitude']):
+      list_sample_altitude.append(sample['altitude'][altitude_start:altitude_end].mean())
+      altitude_start += 5
+      altitude_end += 5
 
-  list_altitude.append(list_sample_altitude)
+    list_altitude.append(list_sample_altitude)
 
-np_feature_altitude = np.array(list_altitude)
-np_feature_altitude = np_feature_altitude / np.amax(np_feature_altitude)
+  np_feature_altitude = np.array(list_altitude)
+  np_feature_altitude = np_feature_altitude / np.amax(np_feature_altitude)
 
-###########################################################################
-# Create pressure feature.
-###########################################################################
+  ###########################################################################
+  # Create pressure feature.
+  ###########################################################################
 
-print('Creating pressure feature...')
-list_pressure = []
+  print('Creating pressure feature...')
+  list_pressure = []
 
-for sample in u1_samples:
-  list_sample_pressure = []
-  pressure_start = 0
-  pressure_end = 5
+  for sample in u1_samples:
+    list_sample_pressure = []
+    pressure_start = 0
+    pressure_end = 5
 
-  while pressure_end < len(sample['pressure']):
-    list_sample_pressure.append(sample['pressure'][pressure_start:pressure_end].mean())
-    pressure_start += 5
-    pressure_end += 5
+    while pressure_end < len(sample['pressure']):
+      list_sample_pressure.append(sample['pressure'][pressure_start:pressure_end].mean())
+      pressure_start += 5
+      pressure_end += 5
 
-  list_pressure.append(list_sample_pressure)
+    list_pressure.append(list_sample_pressure)
 
-np_feature_pressure = np.array(list_pressure)
-np_feature_pressure = np_feature_pressure / np.amax(np_feature_pressure)
+  np_feature_pressure = np.array(list_pressure)
+  np_feature_pressure = np_feature_pressure / np.amax(np_feature_pressure)
 
-###########################################################################
-# Create genuine label.
-###########################################################################
+  ###########################################################################
+  # Create genuine label.
+  ###########################################################################
 
-list_genuine = []
+  list_genuine = []
 
-for sample in u1_samples:
-  list_genuine.append(sample['genuine'].mean())
+  for sample in u1_samples:
+    list_genuine.append(sample['genuine'].mean())
 
-np_label_genuine = np.array(list_genuine)
+  np_label_genuine = np.array(list_genuine)
 
-###########################################################################
-# Merge features into a mega-feature for each sample.
-###########################################################################
+  ###########################################################################
+  # Merge features into a mega-feature for each sample.
+  ###########################################################################
 
-input_features = [
-  np_feature_x,
-  np_feature_y,
-  np_feature_azimuth,
-  np_feature_altitude,
-  np_feature_pressure,
-]
+  input_features = [
+    np_feature_x,
+    np_feature_y,
+    np_feature_azimuth,
+    np_feature_altitude,
+    np_feature_pressure,
+  ]
 
-samples = []
-features = []
-labels = []
+  samples = []
+  features = []
+  labels = []
 
-# For each sample
-for i in range(0, 40):
+  # For each sample
+  for i in range(0, 40):
 
-  mega_features = np.array([])
+    mega_features = np.array([])
 
-  for j in range(0, 5):
-    mega_features = np.concatenate((mega_features, input_features[j][i]), axis=0)
+    for j in range(0, 5):
+      mega_features = np.concatenate((mega_features, input_features[j][i]), axis=0)
 
-  # Add total time to megafeatures.
-  # mega_features = np.append(mega_features, np_feature_time[i])
-  
-  # # Add them all to samples array.
-  # samples.append(mega_features)
+    # Add total time to megafeatures.
+    # mega_features = np.append(mega_features, np_feature_time[i])
+    
+    # # Add them all to samples array.
+    # samples.append(mega_features)
 
-  features.append(mega_features)
-  labels.append(np_label_genuine[i])
+    features.append(mega_features)
+    labels.append(np_label_genuine[i])
 
-###########################################################################
-# Write to file.
-###########################################################################
+  ###########################################################################
+  # Write to file.
+  ###########################################################################
 
-print('')
-print('Writing sampled features to file.')
+  print('')
+  print('Writing sampled features to file.')
 
-np.savetxt('./Task2/Features/Data/Sampled/features_user' + user + '.csv', features)
-np.savetxt('./Task2/Features/Data/Sampled/labels_user' + user + '.csv', labels)
+  np.savetxt('./Task2/Features/Data/Sampled/features_user' + user + '.csv', features)
+  np.savetxt('./Task2/Features/Data/Sampled/labels_user' + user + '.csv', labels)
 
-print('')
-print('User ' + user + ' has ' + str(len(features[0])) + ' features.')
+  print('')
+  print('User ' + user + ' has ' + str(len(features[0])) + ' features.')
