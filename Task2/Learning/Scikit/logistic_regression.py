@@ -1,5 +1,14 @@
 
 ###########################################################################
+# Import libraries.
+###########################################################################
+import numpy as np
+from matplotlib import pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+###########################################################################
 # Configuration.
 ###########################################################################
 
@@ -8,15 +17,6 @@ total_scores = []
 for jkl in range(2, 41):
 
   user = str(jkl)
-
-  ###########################################################################
-  # Import libraries.
-  ###########################################################################
-  import numpy as np
-  from matplotlib import pyplot as plt
-
-  from sklearn.model_selection import train_test_split
-  from sklearn.linear_model import LogisticRegression
 
   ###########################################################################
   # Load features.
