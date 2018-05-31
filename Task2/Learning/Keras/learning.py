@@ -13,6 +13,9 @@ from keras.utils import plot_model
 # Configuration.
 ###########################################################################
 
+with open('./Task2/Learning/Keras/Results/results.txt', 'w') as f:
+    f.write('')
+
 total_scores = []
 
 for jkl in range(1, 41):
@@ -45,7 +48,7 @@ for jkl in range(1, 41):
     # Train model.
     ###########################################################################
 
-    model.fit(features_train, labels_train, epochs=20, batch_size=10)
+    model.fit(features_train, labels_train, epochs=5, batch_size=30)
 
     ###########################################################################
     # Evaluate.
@@ -79,4 +82,4 @@ for jkl in range(1, 41):
 total_scores = np.array(total_scores)
 
 with open('./Task2/Learning/Keras/Results/results.txt', 'a') as f:
-    f.write('Total: ' + str(total_scores.mean()))
+    f.write('Total: ' + str(total_scores.mean()) + '\n')

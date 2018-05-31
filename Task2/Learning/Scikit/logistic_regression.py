@@ -12,9 +12,12 @@ from sklearn.linear_model import LogisticRegression
 # Configuration.
 ###########################################################################
 
+with open('./Task2/Learning/Scikit/Results/results.txt', 'w') as f:
+    f.write('')
+
 total_scores = []
 
-for jkl in range(2, 41):
+for jkl in range(1, 41):
 
   user = str(jkl)
 
