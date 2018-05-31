@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.utils import plot_model
 
 ###########################################################################
 # Configuration.
@@ -79,4 +80,3 @@ total_scores = np.array(total_scores)
 
 with open('./Task2/Learning/Keras/Results/results.txt', 'a') as f:
     f.write('Total: ' + str(total_scores.mean()))
-
