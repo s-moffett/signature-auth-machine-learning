@@ -12,7 +12,6 @@ from keras.layers import Dense
 # Configuration.
 ###########################################################################
 
-user = '1'
 total_scores = []
 
 for jkl in range(1, 41):
@@ -71,10 +70,10 @@ for jkl in range(1, 41):
 
     test_scores = np.array(user_scores[len(features_train):len(features_train)+len(features_test)])
     user_scores = np.array(user_scores)
-    total_scores.append(user_scores.mean())
+    total_scores.append(test_scores.mean())
 
     with open('./Task2/Learning/Keras/Results/results.txt', 'a') as f:
-        f.write('User ' + user + ': ' + str(user_scores.mean()) + '\n')
+        f.write('User ' + user + ': ' + str(test_scores.mean()) + '\n')
 
 total_scores = np.array(total_scores)
 
