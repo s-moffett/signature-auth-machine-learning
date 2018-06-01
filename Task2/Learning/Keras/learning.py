@@ -42,7 +42,7 @@ for jkl in range(1, 41):
 
     model.compile(loss='binary_crossentropy',
                     optimizer='rmsprop',
-                    metrics=['accuracy'])
+                    metrics=['binary_accuracy'])
 
     ###########################################################################
     # Train model.
@@ -55,6 +55,9 @@ for jkl in range(1, 41):
     ###########################################################################
 
     user_scores = []
+
+    loss_and_metrics = model.evaluate(features_test, labels_test, batch_size=10)
+    print(loss_and_metrics)
 
     # Training data
     for i in range(0, len(features_train)):
