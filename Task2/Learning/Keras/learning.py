@@ -81,6 +81,12 @@ for jkl in range(1, 41):
 
     with open('./Task2/Learning/Keras/Results/results.txt', 'a') as f:
         f.write('User ' + user + ': ' + str(test_scores.mean()) + '\n')
+    
+    # Output user 40's test data as an example.
+    if user == '40':
+        print(model.predict(features_test, batch_size=10))
+        print(labels_test)
+
 
 total_scores = np.array(total_scores)
 
