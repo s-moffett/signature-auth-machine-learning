@@ -1,2 +1,3 @@
-# Signature Authentication with Machine Learning
-A project for CYB 5677 exploring the use of machine learning in signature forgery detection.
+# Identifying Signature Forgeries with Logistic Regression and Neural Networks
+Term project for CYB 5677 - Biometric Authentication. 
+Signature forgery detection via logistic regression and neural networks. End-to-end project including data cleaning, feature engineering, and model selection. Tools include Keras and TensorFlow.

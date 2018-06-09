@@ -22,7 +22,7 @@ User 21: 1.0
 User 22: 1.0
 User 23: 1.0
 User 24: 1.0
-User 25: 1.0
+User 25: 0.8
 User 26: 1.0
 User 27: 1.0
 User 28: 1.0
