@@ -1,113 +1,123 @@
 """
-  Cleans data.
+    Cleans data.
 """
 
 ###########################################################################
-# Configuration.
+# Import libraries.
+###########################################################################
+import pandas as pd
+import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
+
+###########################################################################
+# Load data from txt files.
 ###########################################################################
 
-# Environment
-#     Linux = 0
-#     Mac = 1
-data_source = 0
+# List containing each user's list of signatures.
+users = []
 
-for jkl in range(1, 41):
-  user = str(jkl)
+# List containing each user's list of labels. 
+labels = []
 
-  ###########################################################################
-  # Import libraries.
-  ###########################################################################
-  import pandas as pd
-  import numpy as np
-  from matplotlib import pyplot as plt
-  from sklearn.model_selection import train_test_split
+# List containing each user's max_records, max_x, max_y, and max_time.
+metrics = []
 
-  # Disable pandas warnings
-  pd.options.mode.chained_assignment = None
+print('Loading data...')
+for user in range(1, 41):
 
-  ###########################################################################
-  # Load data.
-  #
-  #   Columns:
-  #     x, y, time, button, azimuth, altitude, pressure, genuine
-  #
-  ###########################################################################
+  # User-scoped variables
+  user_signatures = []
+  user_labels = []
 
-  print('')
-  print('Loading data...')
+  for sig in range(1, 41):
+      
+    # Get the signature
+    signature = pd.read_csv('./Data/CSV/Input/Task1/U' + str(user) + 'S' + str(sig) + '.TXT', sep=' ', skiprows=1, names=['x', 'y', 'time', 'button'])        
+    
+    # Add signature to user's list
+    user_signatures.append(signature)
 
-  data_source = 0
-  data = pd.DataFrame()
-
-  # Linux
-  if data_source == 0:
-    data = pd.read_csv('/home/seth/Documents/Classes/Biometrics/Project/Workspace/Data/CSV/Task2/user' + user + '.csv', sep=',', skiprows=0)
-
-  # Mac
-  if data_source == 1:
-    data = pd.read_csv('/Users/sethmoffett/Documents/Docs/Classes/Biometrics/Project/Dataset2/user1.csv', sep=',', skiprows=0)
-
-  ###########################################################################
-  # Separate the signature samples.
-  ###########################################################################
-
-  u1_samples = []
-  for sample_index in range(1, 41):
-    u1_samples.append(data.loc[data['signature'] == sample_index])
-
-  ###########################################################################
-  # Clean each sample's data.
-  ###########################################################################
-
-  print('Cleaning data...')
-
-  for sample in u1_samples:
-
-    # The sample time, x, and y are relative and should start at 0.
-    sample['time'] = sample['time'] - sample['time'].min()  
-    sample['x'] = sample['x'] - sample['x'].min()
-    sample['y'] = sample['y'] - sample['y'].min()
-
-    # Sample azimuth, altitude, and pressure should stay as they are
-    #   so we can compare to other samples.
-
-  ###########################################################################
-  # Find the max number of rows in any sample.
-  ###########################################################################
-
-  list_total_samples = []
-  for sample in u1_samples:
-    list_total_samples.append(sample['time'].count())
-
-  series_total_samples = pd.Series(list_total_samples)
-  max_rows = series_total_samples.max()    # 215
-
-  ###########################################################################
-  # Add rows to each sample so they're even.
-  ###########################################################################
-
-  print('Filling in missing data...')
-
-  for i in range(0, len(u1_samples)):
-    end_time = u1_samples[i]['time'].max() + 10
-    genuine = 0
-
-    if i < 20:
-      genuine = 1
-
-    for i2 in range(0, max_rows - u1_samples[i]['time'].count()):
-      df = pd.DataFrame([[0, 0, end_time, 0, 0, 0, 0, int(user), i+1, genuine]], columns=['x', 'y', 'time', 'button', 'azimuth', 'altitude', 'pressure', 'user', 'signature', 'genuine'])
-      u1_samples[i] = u1_samples[i].append(df)
-      end_time += 10
-
-  ###########################################################################
-  # Output to file.
-  ###########################################################################
-
-  print('Writing clean data to csv...')
-
-  for i in range(0, len(u1_samples)):
-    if i == 0:
-      u1_samples[i].to_csv('./Task2/Cleaning/Data/clean_user' + user + '.csv', mode='w', header=True, index=False)
+    # Add the label
+    if sig < 21:
+      user_labels.append(1)
     else:
-      u1_samples[i].to_csv('./Task2/Cleaning/Data/clean_user' + user + '.csv', mode='a', header=False, index=False)
+      user_labels.append(0)
+
+  # Add user's signatures to a total list
+  users.append(user_signatures)
+
+  # Add user's labels to a total list.
+  labels.append(user_labels)
+
+###########################################################################
+# Clean data.
+###########################################################################
+
+metrics = []
+
+print('Zeroing data...')
+for user in range(0, len(users)):
+
+  # User-scoped metrics
+  user_max_records = 0
+  user_max_x = 0
+  user_max_y = 0
+  user_max_time = 0
+
+  for sig in range(0, len(users[user])):
+
+    # Time, x, and y should start at 0.
+    #   These values are only meaningful relative to each signature's lowest value,
+    #   so each signature can start at 0.
+    users[user][sig]['time'] = users[user][sig]['time'] - users[user][sig]['time'].min()
+    users[user][sig]['x'] = users[user][sig]['x'] - users[user][sig]['x'].min()
+    users[user][sig]['y'] = users[user][sig]['y'] - users[user][sig]['y'].min()
+
+    # Check if signature contributes to user's metrics.
+    if users[user][sig]['time'].count() > user_max_records:
+      user_max_records = users[user][sig]['time'].count()
+      # print('Records = ' + str(user_max_records) + ' at user ' + str(user) + ', sig ' + str(sig))
+
+    if users[user][sig]['x'].max() > user_max_x:
+      user_max_x = users[user][sig]['x'].max()  
+      # print('X = ' + str(user_max_x) + ' at user ' + str(user) + ', sig ' + str(sig))
+
+    if users[user][sig]['y'].max() > user_max_y:
+      user_max_y = users[user][sig]['y'].max()
+      # print('Y = ' + str(user_max_y) + ' at user ' + str(user) + ', sig ' + str(sig))
+
+    if users[user][sig]['time'].max() > user_max_time:
+      user_max_time = users[user][sig]['time'].max()
+      # print('Time = ' + str(user_max_time) + ' at user ' + str(user) + ', sig ' + str(sig))
+
+  # Save the user's metrics.
+  metrics.append([user_max_records, user_max_x, user_max_y, user_max_time])
+
+###########################################################################
+# Add records.
+###########################################################################
+
+for user in range(0, len(users)):    
+  for sig in range(0, len(users[user])):
+
+    print('Adding records to user ' + str(user) + ' sig ' + str(sig))
+
+    # Time, x, and y should be in range 0-1.
+    #   The actual range of values found in a particular signature may be useful compared
+    #   to the other signatures, so values should be scaled relative to the user's
+    #   max values.
+    users[user][sig]['time'] = users[user][sig]['time'] / metrics[user][3]
+    users[user][sig]['x'] = users[user][sig]['x'] / metrics[user][1]
+    users[user][sig]['y'] = users[user][sig]['y'] / metrics[user][2]
+
+    # All signatures for a given user should be the same length.
+    max_time = users[user][sig]['time'].max() + 10
+
+    for i in range(0, user_max_records - users[user][sig]['time'].count()):
+      users[user][sig] = users[user][sig].append(pd.DataFrame([[0, 0, max_time, 0]], columns=['x', 'y', 'time', 'button']))
+      max_time += 10
+    
+    # Write signature to CSV file.
+    users[user][sig].to_csv('./Task1/Cleaning/Data/clean_u' + str(user + 1) + 's' + str(sig + 1) + '.csv')
+
