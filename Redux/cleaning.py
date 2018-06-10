@@ -90,11 +90,17 @@ def clean_task_1():
             if signatures[sig]['time'].count() > max_signature_length:
                 max_signature_length = signatures[sig]['time'].count()
 
-        # Add records to signatures so all signature by a particular user are the same length.
         print('Adding records to user ' + str(user) + '...')
 
-        
+        # Add records to signatures so all signatures by a particular user are the same length.
+        for sig in range(0, 40):
+            max_time = signatures[sig]['time'].max()
+            genuine = signatures[sig]['genuine'].max()
 
+            for i in range(0, max_signature_length - signatures[sig]['time'].count()):
+                df = pd.DataFrame([[0, 0, max_time, 0, user, sig+1, genuine]], columns=['x', 'y', 'time', 'button', 'user', 'signature', 'genuine'])
+                signatures[sig] = signatures[sig].append(df)
+                max_time += 10
 
     return
 
