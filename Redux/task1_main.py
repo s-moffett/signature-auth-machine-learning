@@ -15,6 +15,8 @@ import cleaning
 # # Load data into CSV files.
 cleaning.load_task_1()
 
-# Clean data
+# Clean data.
 cleaning.clean_task_1()
+
+# Create features.
 
