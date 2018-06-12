@@ -42,7 +42,7 @@ def load_task_1():
             user_signatures = user_signatures.append(signature)
 
         # Output user dataframe to file.
-        user_signatures.to_csv('./Redux/Data/Cleaning/clean_user' + str(user) + '.csv')   
+        user_signatures.to_csv('./Redux/Data/Loading/user' + str(user) + '.csv')   
 
     return
 
@@ -58,12 +58,12 @@ def clean_task_1():
         print('Loading user ' + str(user) + '...')
 
         # Read data from CSV.
-        user_dataframe = pd.read_csv('./Redux/Data/Cleaning/clean_user' + str(user) + '.csv')
+        user_dataframe = pd.read_csv('./Redux/Data/Loading/user' + str(user) + '.csv')
     
         # Separate user dataframe into separate signatures.
         signatures = []        
         for sig in range(1, 41):
-            signatures.append(user_dataframe.loc[user_dataframe['signature'] == str(sig)])
+            signatures.append(user_dataframe.loc[user_dataframe['signature'] == sig])
 
         # Max number of records in any of this user's signatures. Used to product even arrays.
         max_signature_length = 0
@@ -94,6 +94,8 @@ def clean_task_1():
 
         # Add records to signatures so all signatures by a particular user are the same length.
         for sig in range(0, 40):
+
+            print('\t Signature ' + str(sig))
             max_time = signatures[sig]['time'].max()
             genuine = signatures[sig]['genuine'].max()
 
@@ -101,6 +103,14 @@ def clean_task_1():
                 df = pd.DataFrame([[0, 0, max_time, 0, user, sig+1, genuine]], columns=['x', 'y', 'time', 'button', 'user', 'signature', 'genuine'])
                 signatures[sig] = signatures[sig].append(df)
                 max_time += 10
+
+        # Combine this user's signatures into a single user dataframe.
+        user_dataframe = pd.DataFrame()
+        
+        for sig in range(0, 40):
+            user_dataframe.append(signatures[sig])
+
+        user_dataframe.to_csv('./Redux/Data/Cleaning/clean_user' + str(user) + '.csv')
 
     return
 
