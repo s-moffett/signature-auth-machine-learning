@@ -44,8 +44,7 @@ def features_task_1():
         this_signature_sampled_x.append( signatures[sig]['x'][x_start:x_end].mean() )
         x_start += 5
         x_end += 5
-
-      this_signature_sampled_x.append( signatures[sig]['x'][x_end:len(signatures[sig]['x'])].mean() )      
+  
       sampled_signatures_x.append(this_signature_sampled_x)
 
       # y
@@ -58,7 +57,6 @@ def features_task_1():
         y_start += 5
         y_end += 5
       
-      this_signature_sampled_y.append( signatures[sig]['y'][y_end:len(signatures[sig]['y'])].mean() )
       sampled_signatures_y.append(this_signature_sampled_y)
 
       # time
@@ -71,7 +69,6 @@ def features_task_1():
         time_start += 5
         time_end += 5
       
-      this_signature_sampled_time.append( signatures[sig]['time'][time_end:len(signatures[sig]['time'])].mean() )
       sampled_signatures_time.append(this_signature_sampled_time)
     
 
