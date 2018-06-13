@@ -16,10 +16,12 @@ pd.options.mode.chained_assignment = None
 for user in range(1, 41):
 
   print('')
+  print('User ' + str(user) + ':')
   print('Loading data...')
 
   # Load data.
   data = pd.read_csv('./Redux/Data/Loading/user' + str(user) + '.csv', sep=',', skiprows=0)
+  data['user'] = user
 
   # Separate the signatures.
   signatures = []
@@ -41,12 +43,14 @@ for user in range(1, 41):
     list_total_rows.append(signature['time'].count())
 
   series_total_rows = pd.Series(list_total_rows)
-  max_rows = series_total_rows.max()    # 215
+  max_rows = series_total_rows.max()
 
   print('Filling in missing data...')
 
   # Add rows to each sample so they're even.
   for i in range(0, len(signatures)):
+    
+    print('\t signature ' +str(i))
     end_time = signatures[i]['time'].max() + 10
     genuine = 0
 
