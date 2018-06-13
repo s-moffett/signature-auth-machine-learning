@@ -105,10 +105,10 @@ def clean_task_1():
                 max_time += 10
 
         # Combine this user's signatures into a single user dataframe.
-        user_dataframe = pd.DataFrame()
+        user_dataframe = signatures[0]
         
-        for sig in range(0, 40):
-            user_dataframe.append(signatures[sig])
+        for sig in range(1, 40):
+            user_dataframe = user_dataframe.append(signatures[sig])
 
         user_dataframe.to_csv('./Redux/Data/Cleaning/clean_user' + str(user) + '.csv')
 
