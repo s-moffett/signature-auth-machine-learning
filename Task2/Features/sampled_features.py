@@ -36,7 +36,7 @@ for jkl in range(1, 41):
   print('')
   print('Loading clean data...')
 
-  data_source = 0
+  data_source = 1
   data = pd.DataFrame()
 
   # Linux
@@ -45,7 +45,7 @@ for jkl in range(1, 41):
 
   # Mac
   if data_source == 1:
-    data = pd.read_csv('/Users/sethmoffett/Documents/Docs/Classes/Biometrics/Project/Dataset2/user1.csv', sep=',', skiprows=0)
+    data = pd.read_csv('/Users/sethmoffett/Documents/Docs/Classes/Biometrics/Project/Workspace/signature-auth-machine-learning/Task2/Cleaning/Data/clean_user' + user + '.csv', sep=',', skiprows=0)
 
   ###########################################################################
   # Separate the signature samples.
@@ -193,6 +193,17 @@ for jkl in range(1, 41):
   ###########################################################################
   # Merge features into a mega-feature for each sample.
   ###########################################################################
+
+  # if user == '1':
+  #   plt.plot(np_feature_x[0])
+  #   plt.plot(np_feature_y[0])
+  #   plt.plot(np_feature_azimuth[0])
+  #   plt.plot(np_feature_altitude[0])
+  #   plt.plot(np_feature_pressure[0])
+
+  #   plt.legend(['X', 'Y', 'Azimuth', 'Altitude', 'Pressure'])
+  #   plt.show()
+  #   quit()
 
   input_features = [
     np_feature_x,
