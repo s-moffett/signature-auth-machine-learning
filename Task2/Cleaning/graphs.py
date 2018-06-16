@@ -7,6 +7,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.model_selection import train_test_split
 
+# Plot raw sample.
 
 # Plot cleaned sample.
 data = pd.read_csv('./Task2/Cleaning/Data/clean_user8.csv')
