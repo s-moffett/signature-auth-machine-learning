@@ -23,7 +23,7 @@ def clean():
 
     # Load data.
     print('\tLoading data...')
-    data = pd.read_csv('./Task2/Data/Input/user' + str(user) + '.csv')
+    data = pd.read_csv('./Task2/Data/Input/user' + str(user) + '.csv', index_col=False)
 
     # Separate the samples.
     samples = []
@@ -63,6 +63,9 @@ def clean():
         df = pd.DataFrame([[0, 0, end_time, 0, 0, 0, 0, user, i+1, genuine]], columns=['x', 'y', 'time', 'button', 'azimuth', 'altitude', 'pressure', 'user', 'signature', 'genuine'])
         samples[i] = samples[i].append(df)
         end_time += 10
+
+    # Remove the weird unnamed column.
+
 
     # Output cleaned sample to file.
     print('\tWriting data to file...')

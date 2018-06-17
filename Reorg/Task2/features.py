@@ -22,7 +22,7 @@ def create_features():
 
     # Load data.
     print('\tLoading data...')
-    data = pd.read_csv('./Task2/Data/Cleaning/clean_user' + str(user) + '.csv')
+    data = pd.read_csv('./Task2/Data/Cleaning/clean_user' + str(user) + '.csv', index_col=False)
 
     # Separate the signature samples.
     samples = []
