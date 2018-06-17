@@ -12,13 +12,13 @@ import training
 # loading.load()
 
 # Clean data.
-cleaning.clean()
+# cleaning.clean()
 
 # Create features.
-features.create_features()
+# features.create_features()
 
 # Train neural network.
-# training.train_neural_network()
+training.train_neural_network()
 
 # Train logistic regression.
 # training.train_logistic_regression()
