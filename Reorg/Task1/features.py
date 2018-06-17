@@ -18,11 +18,11 @@ def create_features():
   for user in range(1, 41):
 
     # Log user.
-    print('Creating features for user ' + user + '...')
+    print('Creating features for user ' + str(user) + '...')
 
     # Load data.
     print('\tLoading data...')
-    data = pd.read_csv('./Task2/Data/Cleaning/clean_user' + user + '.csv')
+    data = pd.read_csv('./Task2/Data/Cleaning/clean_user' + str(user) + '.csv')
 
     # Separate the signature samples.
     samples = []
@@ -34,7 +34,7 @@ def create_features():
     # Create 'Total Time' feature.
     list_total_time = []
     for sample in samples:
-      list_total_time.append(sample['time'].max() = sample['time'].min())
+      list_total_time.append(sample['time'].max() - sample['time'].min())
     
     np_feature_time = np.array(list_total_time)
 
