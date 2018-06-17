@@ -100,11 +100,11 @@ def train_logistic_regression():
   for user in range(1, 41):
 
     # Log user.
-    print('Training logistic regression model for user ' + user + '...')
+    print('Training logistic regression model for user ' + str(user) + '...')
 
     # Load features.
-    features = np.loadtxt('./Task2/Data/Features/features_user' + user + '.csv')
-    labels = np.loadtxt('./Task2/Data/Features/labels_user' + user + '.csv')
+    features = np.loadtxt('./Task2/Data/Features/features_user' + str(user) + '.csv')
+    labels = np.loadtxt('./Task2/Data/Features/labels_user' + str(user) + '.csv')
 
     # Separate user's samples into training and test datasets.
     features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.25)
@@ -121,7 +121,7 @@ def train_logistic_regression():
 
     # Write user's average accuracy to file.
     with open('./Task2/Data/Results/logistic_regression_results.txt', 'a') as f:
-      f.write('')
+      f.write('User ' + str(user) + ': ' + str(score) + '\n')
 
   # Write average of all user's accuracies to file.
   total_scores = np.array(total_scores)
