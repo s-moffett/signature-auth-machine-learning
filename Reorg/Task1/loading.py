@@ -51,24 +51,6 @@ def load():
 
       samples = samples.append(data)
 
-    for sample in range(41, 80):
-      data = pd.read_csv('./Input/Task2/U' + str(user) + 'S' + str(sample - 40) + '.TXT', delimiter=' ', skiprows=1, names=['x', 'y', 'time', 'button', 'azimuth', 'altitude', 'pressure'])
-
-      data['user'] = pd.Series()
-      data['user'] = user
-
-      data['signature'] = pd.Series()
-      data['signature'] = sample
-      
-      data['genuine'] = pd.Series()
-      if sample < 21:
-        data['genuine'] = 1
-      else:
-        data['genuine'] = 0
-
-      samples = samples.append(data)
-
-
     # Write samples to file.
     samples[['x', 'y', 'time', 'button', 'user', 'signature', 'genuine']].to_csv('./Task1/Data/Input/user' + str(user) + '.csv', index=False)
 

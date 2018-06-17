@@ -26,7 +26,7 @@ def create_features():
 
     # Separate the signature samples.
     samples = []
-    for i in range(1, 81):
+    for i in range(1, 41):
       samples.append(data.loc[data['signature'] == i])
     
     print('\tCreating features...')
@@ -90,7 +90,7 @@ def create_features():
     labels = []
 
     # For each sample.
-    for i in range(0, 80):
+    for i in range(0, 40):
       mega_features = np.array([])
 
       # For each feature.

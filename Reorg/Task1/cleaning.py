@@ -26,7 +26,7 @@ def clean():
 
     # Separate the samples.
     samples = []
-    for i in range(1, 81):
+    for i in range(1, 41):
       samples.append(data.loc[data['signature'] == i])
 
     # Zero x, y, and time.
