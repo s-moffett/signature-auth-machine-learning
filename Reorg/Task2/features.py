@@ -159,3 +159,46 @@ def create_features():
     np.savetxt('./Task2/Data/Features/labels_user' + str(user) + '.csv', labels)
 
   return
+
+import pandas as pd
+import numpy as np
+
+user = 1
+
+# Log user.
+print('Creating features for user ' + str(user) + '...')
+
+# Load data.
+print('\tLoading data...')
+data = pd.read_csv('./Task2/Data/Cleaning/clean_user' + str(user) + '.csv', index_col=False)
+
+# Separate the signature samples.
+samples = []
+for i in range(1, 41):
+  samples.append(data.loc[data['signature'] == i])
+
+print('\tCreating features...')
+
+# Create 'Total Time' feature.
+list_total_time = []
+for sample in samples:
+  list_total_time.append(sample['time'].max() - sample['time'].min())
+
+np_feature_time = np.array(list_total_time)
+
+# Create 'X' feature.
+list_x = []
+
+for sample in samples:
+  list_sample_x = []
+  x_start = 0
+  x_end = 5
+
+  while x_end < len(sample['x']):
+    list_sample_x.append(sample['x'][x_start:x_end].mean())
+    x_start += 5
+    x_end += 5
+  list_x.append(list_sample_x)
+
+np_feature_x = np.array(list_x)
+np_feature_x = np_feature_x / np.amax(np_feature_x)

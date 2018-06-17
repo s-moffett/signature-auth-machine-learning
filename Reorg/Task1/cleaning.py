@@ -59,7 +59,7 @@ def clean():
 
       # Insert rows.
       for j in range(0, max_rows - samples[i]['time'].count()):
-        df = pd.DataFrame([[0, 0, end_time, user, i+1, genuine]], columns=['x', 'y', 'time', 'user', 'signature', 'genuine'])
+        df = pd.DataFrame([[0, 0, end_time, 1, user, i+1, genuine]], columns=['x', 'y', 'time', 'button', 'user', 'signature', 'genuine'])
         samples[i] = samples[i].append(df)
         end_time += 10
 

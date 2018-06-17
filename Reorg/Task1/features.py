@@ -22,7 +22,7 @@ def create_features():
 
     # Load data.
     print('\tLoading data...')
-    data = pd.read_csv('./Task2/Data/Cleaning/clean_user' + str(user) + '.csv', index_col=False)
+    data = pd.read_csv('./Task1/Data/Cleaning/clean_user' + str(user) + '.csv', index_col=False)
 
     # Separate the signature samples.
     samples = []
@@ -104,6 +104,3 @@ def create_features():
     np.savetxt('./Task1/Data/Features/labels_user' + str(user) + '.csv', labels)
 
   return
-
-if __name__ == '__main__':
-  create_features()
