@@ -1,8 +1,7 @@
 # Identifying Signature Forgeries with Logistic Regression and Neural Networks
 Term project for CYB 5677 - Biometric Authentication. 
-Signature forgery detection via logistic regression and neural networks. 
 
-End-to-end project including data cleaning, feature engineering, and model selection. Tools include Keras and TensorFlow.
+Exploring the use of signatures in biometric authentication systems using machine learning algorithms. An end-to-end project including data cleaning, feature engineering, and model selection. Tools include Keras and TensorFlow.
 
 To execute a task:
  1. Clone the repository.
