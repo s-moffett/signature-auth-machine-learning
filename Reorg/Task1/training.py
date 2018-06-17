@@ -11,7 +11,8 @@ def train_neural_network():
   import pandas as pd
   import numpy as np
   from sklearn.model_selection import train_test_split
-  from keras.models import Sequential, Dense
+  from keras.models import Sequential
+  from keras.layers import Dense
 
   # Disable pandas warnings.
   pd.options.mode.chained_assignment = None
@@ -26,11 +27,11 @@ def train_neural_network():
   for user in range(1, 41):
 
     # Log user.
-    print('Training neural network for user ' + user + '...')
+    print('Training neural network for user ' + str(user) + '...')
 
     # Load features.
-    features = np.loadtxt('./Task1/Data/Features/features_user' + user + '.csv')
-    labels = np.loadtxt('./Task1/Data/Features/labels_user' + user + '.csv')
+    features = np.loadtxt('./Task1/Data/Features/features_user' + str(user) + '.csv')
+    labels = np.loadtxt('./Task1/Data/Features/labels_user' + str(user) + '.csv')
 
     # Separate user's samples into training and test datasets.
     features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.25)

@@ -68,8 +68,8 @@ def clean():
     print('\tWriting data to file...')
     for i in range(0, len(samples)):
       if i == 0:
-        samples[i].to_csv('./Task2/Data/Cleaning/clean_user' + user + '.csv', mode='w', header=True, index=False)
+        samples[i].to_csv('./Task2/Data/Cleaning/clean_user' + str(user) + '.csv', mode='w', header=True, index=False)
       else:
-        samples[i].to_csv('./Task2/Data/Cleaning/clean_user' + user + '.csv', mode='a', header=False, index=False)
+        samples[i].to_csv('./Task2/Data/Cleaning/clean_user' + str(user) + '.csv', mode='a', header=False, index=False)
 
   return

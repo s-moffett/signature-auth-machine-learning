@@ -8,7 +8,7 @@ import features
 import training
 
 # Clean data.
-cleaning.clean()
+# cleaning.clean()
 
 # Create features.
 features.create_features()
