@@ -48,10 +48,10 @@ def train_neural_network():
                     metrics=['binary_accuracy'])
 
     # Train model.
-    model.fit(features_train, labels_train, epochs=100, batch_size=30)
+    model.fit(features_train, labels_train, epochs=100, batch_size=60)
 
     # Evaluate total loss and accuracy for the user's test set.
-    loss_and_metrics = model.evaluate(features_test, labels_test, batch_size=10)
+    loss_and_metrics = model.evaluate(features_test, labels_test, batch_size=20)
 
     # Calculate our own accuracy based on the probability.
     user_scores = []
@@ -61,12 +61,14 @@ def train_neural_network():
       else:
         user_scores.append(0)
     
+    user_scores = np.array(user_scores)
+
     # Add user's average accuracy to total scores list.
     total_scores.append(user_scores.mean())
 
     # Write user's average accuracy to file.
     with open('./Task1/Data/Results/neural_network_results.txt', 'a') as f:
-      f.write('User ' + user + ': ' + str(user_scores.mean()) + '\n')
+      f.write('User ' + str(user) + ': ' + str(user_scores.mean()) + '\n')
 
   # Write average of all user's accuracies to file.
   total_scores = np.array(total_scores)
@@ -99,11 +101,11 @@ def train_logistic_regression():
   for user in range(1, 41):
 
     # Log user.
-    print('Training logistic regression model for user ' + user + '...')
+    print('Training logistic regression model for user ' + str(user) + '...')
 
     # Load features.
-    features = np.loadtxt('./Task1/Data/Features/features_user' + user + '.csv')
-    labels = np.loadtxt('./Task1/Data/Features/labels_user' + user + '.csv')
+    features = np.loadtxt('./Task1/Data/Features/features_user' + str(user) + '.csv')
+    labels = np.loadtxt('./Task1/Data/Features/labels_user' + str(user) + '.csv')
 
     # Separate user's samples into training and test datasets.
     features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.25)
@@ -120,7 +122,7 @@ def train_logistic_regression():
 
     # Write user's average accuracy to file.
     with open('./Task1/Data/Results/logistic_regression_results.txt', 'a') as f:
-      f.write('')
+      f.write('User ' + str(user) + ': ' + str(score) + '\n')
 
   # Write average of all user's accuracies to file.
   total_scores = np.array(total_scores)

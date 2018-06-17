@@ -22,11 +22,11 @@ def create_features():
 
     # Load data.
     print('\tLoading data...')
-    data = pd.read_csv('./Task1/Data/Cleaning/clean_user' + str(user) + '.csv')
+    data = pd.read_csv('./Task2/Data/Cleaning/clean_user' + str(user) + '.csv', index_col=False)
 
     # Separate the signature samples.
     samples = []
-    for i in range(1, 41):
+    for i in range(1, 81):
       samples.append(data.loc[data['signature'] == i])
     
     print('\tCreating features...')
@@ -90,7 +90,7 @@ def create_features():
     labels = []
 
     # For each sample.
-    for i in range(0, 40):
+    for i in range(0, 80):
       mega_features = np.array([])
 
       # For each feature.
@@ -104,3 +104,6 @@ def create_features():
     np.savetxt('./Task1/Data/Features/labels_user' + str(user) + '.csv', labels)
 
   return
+
+if __name__ == '__main__':
+  create_features()

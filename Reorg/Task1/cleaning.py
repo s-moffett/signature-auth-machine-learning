@@ -22,11 +22,11 @@ def clean():
 
     # Load data.
     print('\tLoading data...')
-    data = pd.read_csv('./Task2/Data/Input/user' + str(user) + '.csv')
+    data = pd.read_csv('./Task1/Data/Input/user' + str(user) + '.csv')
 
     # Separate the samples.
     samples = []
-    for i in range(1, 41):
+    for i in range(1, 81):
       samples.append(data.loc[data['signature'] == i])
 
     # Zero x, y, and time.
@@ -67,8 +67,8 @@ def clean():
     print('\tWriting data to file...')
     for i in range(0, len(samples)):
       if i == 0:
-        samples[i].to_csv('./Task1/Data/Cleaning/clean_user' + user + '.csv', mode='w', header=True, index=False)
+        samples[i].to_csv('./Task1/Data/Cleaning/clean_user' + str(user) + '.csv', mode='w', header=True, index=False)
       else:
-        samples[i].to_csv('./Task1/Data/Cleaning/clean_user' + user + '.csv', mode='a', header=False, index=False)
+        samples[i].to_csv('./Task1/Data/Cleaning/clean_user' + str(user) + '.csv', mode='a', header=False, index=False)
   
   return
