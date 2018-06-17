@@ -64,9 +64,6 @@ def clean():
         samples[i] = samples[i].append(df)
         end_time += 10
 
-    # Remove the weird unnamed column.
-
-
     # Output cleaned sample to file.
     print('\tWriting data to file...')
     for i in range(0, len(samples)):

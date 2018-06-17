@@ -9,16 +9,16 @@ import features
 import training
 
 # Load raw data into datasets.
-# loading.load()
+loading.load()
 
 # Clean data.
-# cleaning.clean()
+cleaning.clean()
 
 # Create features.
-# features.create_features()
+features.create_features()
 
 # Train neural network.
 training.train_neural_network()
 
 # Train logistic regression.
-# training.train_logistic_regression()
+training.train_logistic_regression()
