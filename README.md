@@ -6,4 +6,6 @@ Exploring the use of signatures in biometric authentication systems using machin
 To execute a task:
  1. Clone the repository.
  2. Navigate to the `/src` directory.
- 3. Execute the `main.py` file in the corresponding task folder.
+ 3. Execute the `main.py` file in the corresponding task directory.
+ 
+**Note that all scripts should be executed with `/src` as the working directory.**
